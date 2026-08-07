@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Infinity as InfinityIcon, Menu, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { content } from "../../data/content";
@@ -8,7 +8,15 @@ import { cn } from "../../utils/cn";
 import { Container } from "../ui/Container";
 import { Logo } from "../ui/Logo";
 
-export function Navbar() {
+interface NavbarProps {
+  backgroundVisible: boolean;
+  onToggleBackground: () => void;
+}
+
+export function Navbar({
+  backgroundVisible,
+  onToggleBackground,
+}: NavbarProps) {
   const [open, setOpen] = useState(false);
   const scrollY = useScrollY();
 
@@ -93,6 +101,25 @@ export function Navbar() {
           </ul>
 
           <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={onToggleBackground}
+              aria-pressed={backgroundVisible}
+              aria-label={
+                backgroundVisible ? "Ocultar fondo animado" : "Mostrar fondo animado"
+              }
+              title={
+                backgroundVisible ? "Ocultar fondo animado" : "Mostrar fondo animado"
+              }
+              className="focus-ring grid size-10 place-items-center rounded-lg text-zinc-200 transition-colors hover:bg-surface"
+            >
+              <InfinityIcon
+                className={cn(
+                  "size-5 transition-opacity",
+                  !backgroundVisible && "opacity-40",
+                )}
+              />
+            </button>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}

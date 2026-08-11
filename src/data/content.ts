@@ -39,6 +39,7 @@ import type {
   TeamMember,
   Technology,
 } from "../types";
+import type { ChatConnectionState } from "../types/chat";
 
 import photo from "../assets/foto.webp";
 
@@ -75,6 +76,55 @@ export interface ContactContent {
   channels: ContactChannel[];
   availability: { title: string; value: string };
   nextSteps: { step: string; title: string; description: string }[];
+}
+
+export interface AgendaContent {
+  title: string;
+  description: string;
+  selectHint: string;
+  loading: string;
+  empty: string;
+  error: string;
+  retry: string;
+  nombreLabel: string;
+  nombrePlaceholder: string;
+  emailLabel: string;
+  emailPlaceholder: string;
+  invalidForm: string;
+  reservar: string;
+  reservarOtro: string;
+  reservadoTitle: string;
+  reservadoDescription: string;
+  salaLabel: string;
+  tokenLabel: string;
+  copiar: string;
+  copiado: string;
+  equipoTitle: string;
+  equipoDescription: string;
+  equipoTurnoIdLabel: string;
+  equipoTurnoIdPlaceholder: string;
+  equipoConectar: string;
+  equipoOtroTurno: string;
+  equipoError: string;
+}
+
+export interface ChatContent {
+  title: string;
+  description: string;
+  status: Record<ChatConnectionState, string>;
+  historyLabel: string;
+  empty: string;
+  inputLabel: string;
+  inputPlaceholder: string;
+  send: string;
+  countdownTitle: string;
+  countdownDescription: string;
+  dias: string;
+  horas: string;
+  minutos: string;
+  segundos: string;
+  finalizadoTitle: string;
+  finalizadoDescription: string;
 }
 
 export interface ParticipateRole {
@@ -145,6 +195,8 @@ interface Content {
   };
   technologies: PreviewSection & { items: Technology[] };
   contact: ContactContent;
+  agenda: AgendaContent;
+  chat: ChatContent;
   notFound: {
     eyebrow: string;
     title: string;
@@ -709,6 +761,65 @@ export const content: Content = {
         description: "Ponemos la metodología en marcha desde el primer día.",
       },
     ],
+  },
+  agenda: {
+    title: "Agenda una charla",
+    description:
+      "Elegí un horario y hablamos de tu proyecto por chat en vivo, con la sala lista para el momento exacto.",
+    selectHint: "Elegí el horario que mejor te quede",
+    loading: "Cargando horarios…",
+    empty:
+      "Por ahora no hay horarios disponibles. Escribinos por mail y coordinamos.",
+    error: "No pudimos cargar los horarios. Intentalo de nuevo.",
+    retry: "Reintentar",
+    nombreLabel: "Tu nombre",
+    nombrePlaceholder: "Cómo te llamás",
+    emailLabel: "Tu email",
+    emailPlaceholder: "tucorreo@ejemplo.com",
+    invalidForm: "Completá tu nombre y un email válido.",
+    reservar: "Reservar turno",
+    reservarOtro: "Reservar otro turno",
+    reservadoTitle: "Turno reservado",
+    reservadoDescription:
+      "Guardá estos datos: los vas a necesitar para entrar al chat cuando llegue el horario.",
+    salaLabel: "Sala",
+    tokenLabel: "Token de acceso",
+    copiar: "Copiar",
+    copiado: "Copiado",
+    equipoTitle: "Panel de equipo",
+    equipoDescription:
+      "Simulá el ingreso del equipo a un turno usando su ID. Solo para pruebas.",
+    equipoTurnoIdLabel: "ID del turno",
+    equipoTurnoIdPlaceholder: "Ej.: 1",
+    equipoConectar: "Conectar como equipo",
+    equipoOtroTurno: "Conectar con otro turno",
+    equipoError: "No pudimos generar el acceso de equipo.",
+  },
+  chat: {
+    title: "Chat del turno",
+    description:
+      "Escribí y recibí respuestas en vivo dentro del horario reservado.",
+    status: {
+      conectando: "Conectando…",
+      conectado: "En línea",
+      reconectando: "Reconectando…",
+      desconectado: "Sin conexión",
+    },
+    historyLabel: "Mensajes del chat",
+    empty: "Aún no hay mensajes. Escribí el primero.",
+    inputLabel: "Mensaje",
+    inputPlaceholder: "Escribí tu mensaje…",
+    send: "Enviar",
+    countdownTitle: "El chat comienza en",
+    countdownDescription:
+      "Cuando llegue la hora vas a poder escribir en esta misma sala.",
+    dias: "días",
+    horas: "hs",
+    minutos: "min",
+    segundos: "seg",
+    finalizadoTitle: "Turno finalizado",
+    finalizadoDescription:
+      "Este turno ya terminó. Si necesitás más ayuda, escribinos por mail.",
   },
   notFound: {
     eyebrow: "Error 404",

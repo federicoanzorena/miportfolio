@@ -1,11 +1,19 @@
 import { motion } from "framer-motion";
+import { KeyRound } from "lucide-react";
+import { useState } from "react";
+import { PanelEquipo } from "../components/contacto/PanelEquipo";
+import { SalaDeChat } from "../components/contacto/SalaDeChat";
+import { SelectorFranjas } from "../components/contacto/SelectorFranjas";
 import { Container } from "../components/ui/Container";
 import { Reveal } from "../components/ui/Reveal";
 import { content } from "../data/content";
+import type { TurnoConfirmado } from "../types/agenda";
 
 export function ContactPage() {
   const contact = content.contact;
+  const agenda = content.agenda;
   const channel = contact.channels[0];
+  const [turno, setTurno] = useState<TurnoConfirmado | null>(null);
 
   return (
     <section className="relative overflow-hidden pb-24 pt-28 sm:pt-40">
@@ -71,6 +79,61 @@ export function ContactPage() {
               </span>
             </div>
           </motion.div>
+        </div>
+
+        <div className="mx-auto mt-24 max-w-4xl">
+          <Reveal>
+            <div className="text-center">
+              <h2 className="text-xl font-semibold tracking-tight text-zinc-100 sm:text-2xl">
+                {agenda.title}
+              </h2>
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
+                {agenda.description}
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="mt-10 rounded-3xl border border-line bg-surface/70 p-6 sm:p-8">
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <h3 className="text-lg font-semibold tracking-tight text-zinc-100">
+                {turno ? agenda.reservadoTitle : agenda.selectHint}
+              </h3>
+              {turno ? (
+                <button
+                  type="button"
+                  onClick={() => setTurno(null)}
+                  className="focus-ring shrink-0 rounded-full border border-line bg-surface px-4 py-2 text-sm font-medium text-zinc-100 transition-colors hover:border-zinc-600"
+                >
+                  {agenda.reservarOtro}
+                </button>
+              ) : null}
+            </div>
+
+            {turno ? (
+              <SalaDeChat
+                salaId={turno.sala_id}
+                token={turno.token_visitante}
+                rol="visitante"
+                inicio={turno.inicio}
+                fin={turno.fin}
+              />
+            ) : (
+              <SelectorFranjas onReservado={setTurno} />
+            )}
+          </div>
+
+          <details className="group mt-8 overflow-hidden rounded-3xl border border-line bg-surface/50">
+            <summary className="flex cursor-pointer list-none flex-col gap-1 px-6 py-5 [&::-webkit-details-marker]:hidden">
+              <span className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-100">
+                <KeyRound aria-hidden className="size-4 text-accent-400" />
+                {agenda.equipoTitle}
+              </span>
+              <span className="text-xs text-muted">{agenda.equipoDescription}</span>
+            </summary>
+            <div className="border-t border-line px-6 py-5">
+              <PanelEquipo />
+            </div>
+          </details>
         </div>
 
         <div className="mx-auto mt-24 max-w-4xl">

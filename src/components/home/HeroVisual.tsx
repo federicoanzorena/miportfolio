@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Atom, BadgeCheck, Zap } from "lucide-react";
+import { ArrowRight, BadgeCheck, Zap } from "lucide-react";
 
 const chipAnimation = {
   animate: { y: [0, -10, 0] },
@@ -31,18 +31,18 @@ function BeforeWindow() {
       </div>
       <div className="mt-3 space-y-2 grayscale">
         <div className="flex gap-1.5">
-          <div className="h-2.5 flex-1 rounded-[2px] bg-zinc-700" />
-          <div className="h-2.5 w-10 rounded-[2px] bg-zinc-800" />
-          <div className="h-2.5 w-10 rounded-[2px] bg-zinc-800" />
+          <div className="h-2.5 flex-1 rounded-xs bg-zinc-700" />
+          <div className="h-2.5 w-10 rounded-xs bg-zinc-800" />
+          <div className="h-2.5 w-10 rounded-xs bg-zinc-800" />
         </div>
         <div className="h-9 rounded-[3px] bg-zinc-700" />
-        <div className="h-3 w-3/4 rounded-[2px] bg-zinc-600" />
-        <div className="h-3 w-1/2 rounded-[2px] bg-zinc-800" />
+        <div className="h-3 w-3/4 rounded-xs bg-zinc-600" />
+        <div className="h-3 w-1/2 rounded-xs bg-zinc-800" />
         <div className="flex gap-2">
           <div className="h-14 flex-1 rounded-[3px] bg-zinc-700" />
           <div className="h-14 flex-1 rounded-[3px] bg-zinc-800" />
         </div>
-        <div className="h-2.5 w-2/3 rounded-[2px] bg-zinc-700" />
+        <div className="h-2.5 w-2/3 rounded-xs bg-zinc-700" />
       </div>
     </div>
   );
@@ -110,14 +110,6 @@ export function HeroVisual() {
           </div>
           <AfterWindow />
         </div>
-      </motion.div>
-
-      <motion.div
-        {...chipAnimation}
-        className="absolute -right-2 top-2 flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 shadow-lg sm:-right-6"
-      >
-        <Atom className="size-4 text-accent-400" />
-        <span className="text-xs font-medium text-zinc-200">React</span>
       </motion.div>
 
       <motion.div

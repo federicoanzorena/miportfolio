@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .agenda.router import router as agenda_router
 from .chat.router import router as chat_router, supervisor_loop
 from .database import init_db
+from .sumate.router import router as sumate_router
 
 FRONTEND_ORIGINS = [
     origen.strip()
@@ -38,4 +39,5 @@ app.add_middleware(
 )
 
 app.include_router(agenda_router, prefix="/api")
+app.include_router(sumate_router, prefix="/api")
 app.include_router(chat_router)

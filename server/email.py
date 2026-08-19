@@ -1,5 +1,6 @@
 import logging
 import smtplib
+from datetime import datetime
 from email.message import EmailMessage
 from email.utils import formataddr
 
@@ -90,3 +91,55 @@ def enviar_email_confirmacion(turno, inicio, fin, token) -> None:
             cliente.send_message(mensaje)
     except Exception:
         logger.exception("Fallo el envío del email de confirmación")
+
+
+def _armar_mensaje_sumate(nombre: str, email: str) -> EmailMessage:
+    destino = config.SMTP_FROM or "anzorenam133@gmail.com"
+    remitente = formataddr((config.SMTP_FROM_NAME, config.SMTP_FROM))
+
+    mensaje = EmailMessage()
+    mensaje["Subject"] = f"Nuevo interés en sumarse al equipo: {nombre}"
+    mensaje["From"] = remitente
+    mensaje["To"] = destino
+    mensaje["Reply-To"] = formataddr((nombre, email))
+
+    texto = (
+        f"Alguien quiere sumarse al equipo binfinito.\n\n"
+        f"Nombre: {nombre}\n"
+        f"Email: {email}\n"
+        f"Fecha: {datetime.now().astimezone().strftime('%d/%m/%Y %H:%M')}\n"
+    )
+    html = (
+        "<html><body style='font-family:sans-serif;color:#18181b'>"
+        "<h2>Nuevo interés en sumarse al equipo</h2>"
+        "<dl>"
+        f"<dt><b>Nombre</b></dt><dd>{nombre}</dd>"
+        f"<dt><b>Email</b></dt><dd><a href='mailto:{email}'>{email}</a></dd>"
+        f"<dt><b>Fecha</b></dt><dd>{datetime.now().astimezone().strftime('%d/%m/%Y %H:%M')}</dd>"
+        "</dl>"
+        "</body></html>"
+    )
+
+    mensaje.set_content(texto)
+    mensaje.add_alternative(html, subtype="html")
+    return mensaje
+
+
+def enviar_email_sumate(nombre: str, email: str) -> None:
+    """Notifica al equipo cuando alguien quiere sumarse (best-effort)."""
+    if not config.SMTP_ENABLED:
+        logger.info(
+            "SMTP_ENABLED=false: se omite el email de sumate (%s <%s>)",
+            nombre,
+            email,
+        )
+        return
+
+    try:
+        mensaje = _armar_mensaje_sumate(nombre, email)
+        with _conectar() as cliente:
+            if config.SMTP_USER:
+                cliente.login(config.SMTP_USER, config.SMTP_PASSWORD)
+            cliente.send_message(mensaje)
+    except Exception:
+        logger.exception("Fallo el envío del email de sumate")

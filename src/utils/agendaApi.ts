@@ -48,3 +48,14 @@ export function accesoEquipo(turnoId: number): Promise<AccesoEquipo> {
     method: "POST",
   });
 }
+
+export function registrarInteres(datos: {
+  nombre: string;
+  email: string;
+}): Promise<{ ok: boolean; mensaje: string }> {
+  return peticion("/api/sumate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datos),
+  });
+}

@@ -4,29 +4,7 @@ import { Container } from "../components/ui/Container";
 import { PageHeader } from "../components/ui/PageHeader";
 import { Reveal } from "../components/ui/Reveal";
 import { content } from "../data/content";
-
-const STORAGE_KEY = "binfinito-registros";
-
-interface Registro {
-  nombre: string;
-  email: string;
-  fecha: string;
-}
-
-function obtenerRegistros(): Registro[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as Registro[]) : [];
-  } catch {
-    return [];
-  }
-}
-
-function guardarRegistro(registro: Registro): void {
-  const registros = obtenerRegistros();
-  registros.push(registro);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(registros));
-}
+import { registrarInteres } from "../utils/agendaApi";
 
 export function SumatePage() {
   const sumate = content.sumate;
@@ -48,15 +26,19 @@ export function SumatePage() {
     setError(null);
     setEnviando(true);
 
-    setTimeout(() => {
-      guardarRegistro({
-        nombre: nombre.trim(),
-        email: email.trim(),
-        fecha: new Date().toISOString(),
+    registrarInteres({
+      nombre: nombre.trim(),
+      email: email.trim(),
+    })
+      .then(() => {
+        setExito(true);
+      })
+      .catch(() => {
+        setError(sumate.error);
+      })
+      .finally(() => {
+        setEnviando(false);
       });
-      setEnviando(false);
-      setExito(true);
-    }, 400);
   };
 
   const handleReset = () => {

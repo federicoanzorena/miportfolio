@@ -212,6 +212,7 @@ interface Content {
     emailLabel: string;
     emailPlaceholder: string;
     invalidForm: string;
+    error: string;
     submit: string;
     successTitle: string;
     successDescription: string;
@@ -852,6 +853,7 @@ export const content: Content = {
     emailLabel: "Tu email",
     emailPlaceholder: "tucorreo@ejemplo.com",
     invalidForm: "Completá tu nombre y un email válido.",
+    error: "No pudimos procesar tu registro. Intentalo de nuevo.",
     submit: "Quiero sumarme",
     successTitle: "¡Gracias por interesarte!",
     successDescription:

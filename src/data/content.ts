@@ -203,6 +203,20 @@ interface Content {
     description: string;
     cta: string;
   };
+  sumate: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    nombreLabel: string;
+    nombrePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    invalidForm: string;
+    submit: string;
+    successTitle: string;
+    successDescription: string;
+    submitAnother: string;
+  };
   common: { backHome: string; skipLink: string };
 }
 
@@ -827,6 +841,22 @@ export const content: Content = {
     description:
       "La página que buscas se movió o nunca existió. Volvamos a terreno conocido.",
     cta: "Volver al inicio",
+  },
+  sumate: {
+    eyebrow: "Sumate",
+    title: "Sumate al equipo",
+    description:
+      "Dejanos tus datos y te contactamos cuando haya un lugar para vos.",
+    nombreLabel: "Tu nombre",
+    nombrePlaceholder: "Cómo te llamás",
+    emailLabel: "Tu email",
+    emailPlaceholder: "tucorreo@ejemplo.com",
+    invalidForm: "Completá tu nombre y un email válido.",
+    submit: "Quiero sumarme",
+    successTitle: "¡Gracias por interesarte!",
+    successDescription:
+      "Guardamos tus datos. Te vamos a contactar cuando tengamos un lugar disponible.",
+    submitAnother: "Registrar otro perfil",
   },
   common: {
     backHome: "Volver al inicio",

@@ -100,6 +100,7 @@ export function ParticipatePage() {
           primary: participate.cta,
           secondary: participate.secondaryCta,
         }}
+        primaryTo="/sumate"
         secondaryTo="/nosotros"
       />
     </>

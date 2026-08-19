@@ -8,6 +8,7 @@ export type RoutePath =
   | "/tecnologias"
   | "/nosotros"
   | "/participar"
+  | "/sumate"
   | "/contacto";
 
 export interface NavItem {

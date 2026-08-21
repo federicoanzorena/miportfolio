@@ -6,6 +6,21 @@ import { Reveal } from "../components/ui/Reveal";
 import { content } from "../data/content";
 import { registrarInteres } from "../utils/agendaApi";
 
+const PENDIENTES_KEY = "binfinito-sumate-pendientes";
+
+function guardarPendiente(nombre: string, email: string): void {
+  try {
+    const raw = localStorage.getItem(PENDIENTES_KEY);
+    const pendientes: { nombre: string; email: string; fecha: string }[] = raw
+      ? JSON.parse(raw)
+      : [];
+    pendientes.push({ nombre, email, fecha: new Date().toISOString() });
+    localStorage.setItem(PENDIENTES_KEY, JSON.stringify(pendientes));
+  } catch {
+    // storage no disponible
+  }
+}
+
 export function SumatePage() {
   const sumate = content.sumate;
 
@@ -34,6 +49,7 @@ export function SumatePage() {
         setExito(true);
       })
       .catch(() => {
+        guardarPendiente(nombre.trim(), email.trim());
         setError(sumate.error);
       })
       .finally(() => {
@@ -114,6 +130,18 @@ export function SumatePage() {
                       placeholder={sumate.emailPlaceholder}
                       autoComplete="email"
                       className="focus-ring w-full rounded-xl border border-line bg-base/60 px-4 py-2.5 text-sm text-zinc-100 placeholder:text-subtle"
+                    />
+                  </div>
+
+                  {/* Honeypot: oculto para usuarios reales, bots lo completan */}
+                  <div aria-hidden="true" className="sr-only">
+                    <label htmlFor="sumate-website">Website</label>
+                    <input
+                      id="sumate-website"
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
                     />
                   </div>
 

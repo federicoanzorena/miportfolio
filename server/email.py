@@ -8,8 +8,6 @@ from . import config
 
 logger = logging.getLogger(__name__)
 
-PUERTO_SSL = 465
-
 
 def _armar_mensaje(turno, inicio, fin, token) -> EmailMessage:
     destino = formataddr((turno.nombre_visitante, turno.email_visitante))
@@ -51,26 +49,11 @@ def _armar_mensaje(turno, inicio, fin, token) -> EmailMessage:
 
 
 def _conectar() -> smtplib.SMTP:
-    if config.SMTP_PORT == PUERTO_SSL:
-        if config.SMTP_STARTTLS:
-            logger.info(
-                "Puerto %s: se usa SMTP_SSL, SMTP_STARTTLS se ignora",
-                config.SMTP_PORT,
-            )
-        return smtplib.SMTP_SSL(
-            config.SMTP_HOST,
-            config.SMTP_PORT,
-            timeout=config.SMTP_TIMEOUT_SEGUNDOS,
-        )
-
-    cliente = smtplib.SMTP(
+    return smtplib.SMTP_SSL(
         config.SMTP_HOST,
         config.SMTP_PORT,
         timeout=config.SMTP_TIMEOUT_SEGUNDOS,
     )
-    if config.SMTP_STARTTLS:
-        cliente.starttls()
-    return cliente
 
 
 def enviar_email_confirmacion(turno, inicio, fin, token) -> None:

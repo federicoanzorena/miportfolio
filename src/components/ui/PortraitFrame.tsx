@@ -43,7 +43,7 @@ export function PortraitFrame({
               width={768}
               height={960}
               loading="lazy"
-              className="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              className="aspect-[4/5] w-full object-cover object-[center_20%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             />
             <div
               aria-hidden

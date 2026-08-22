@@ -41,7 +41,7 @@ import type {
 } from "../types";
 import type { ChatConnectionState } from "../types/chat";
 
-import photo from "../assets/foto.webp";
+import photo from "../assets/fotoWeb.jpeg";
 
 export interface Highlight {
   title: string;

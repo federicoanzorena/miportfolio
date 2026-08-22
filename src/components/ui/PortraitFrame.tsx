@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { User } from "lucide-react";
 import { content } from "../../data/content";
 
-import photo from "../../assets/foto.webp";
+import photo from "../../assets/fotoWeb.jpeg";
 
 type PortraitFrameProps = {
   showPill?: boolean;

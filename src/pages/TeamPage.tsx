@@ -31,7 +31,7 @@ export function TeamPage() {
                       width={768}
                       height={960}
                       loading="lazy"
-                      className="aspect-[4/5] w-full object-cover object-[center_20%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      className="aspect-[4/5] w-full object-cover object-[center_30%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     />
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-5 pt-16">
                       <h2 className="text-lg font-semibold tracking-tight text-zinc-50">

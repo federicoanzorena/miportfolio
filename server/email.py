@@ -1,23 +1,29 @@
 import logging
-import smtplib
 from datetime import datetime
-from email.message import EmailMessage
-from email.utils import formataddr
+
+import resend
 
 from . import config
 
 logger = logging.getLogger(__name__)
 
+resend.api_key = config.RESEND_API_KEY
 
-def _armar_mensaje(turno, inicio, fin, token) -> EmailMessage:
-    destino = formataddr((turno.nombre_visitante, turno.email_visitante))
-    remitente = formataddr((config.SMTP_FROM_NAME, config.SMTP_FROM))
 
-    mensaje = EmailMessage()
-    mensaje["Subject"] = "Tu turno con binfinito está confirmado"
-    mensaje["From"] = remitente
-    mensaje["To"] = destino
+def _enviar(params: dict) -> None:
+    """Envía un email vía Resend (best-effort)."""
+    if not config.EMAIL_ENABLED:
+        logger.info("EMAIL_ENABLED=false: se omite el envío del email")
+        return
 
+    try:
+        resend.Emails.send(params)
+    except Exception:
+        logger.exception("Fallo el envío del email")
+
+
+def enviar_email_confirmacion(turno, inicio, fin, token) -> None:
+    """Envía la confirmación del turno al visitante."""
     texto = (
         f"Hola {turno.nombre_visitante},\n\n"
         f"Tu turno fue confirmado.\n\n"
@@ -43,49 +49,18 @@ def _armar_mensaje(turno, inicio, fin, token) -> EmailMessage:
         "</body></html>"
     )
 
-    mensaje.set_content(texto)
-    mensaje.add_alternative(html, subtype="html")
-    return mensaje
+    _enviar({
+        "from": config.EMAIL_FROM,
+        "to": [turno.email_visitante],
+        "subject": "Tu turno con binfinito está confirmado",
+        "text": texto,
+        "html": html,
+    })
 
 
-def _conectar() -> smtplib.SMTP:
-    return smtplib.SMTP_SSL(
-        config.SMTP_HOST,
-        config.SMTP_PORT,
-        timeout=config.SMTP_TIMEOUT_SEGUNDOS,
-    )
-
-
-def enviar_email_confirmacion(turno, inicio, fin, token) -> None:
-    """Envía la confirmación del turno por SMTP (best-effort).
-
-    Si SMTP no está habilitado o el envío falla, se loguea el error y no se
-    propaga para no romper la confirmación del turno.
-    """
-    if not config.SMTP_ENABLED:
-        logger.info("SMTP_ENABLED=false: se omite el envío del email")
-        return
-
-    try:
-        mensaje = _armar_mensaje(turno, inicio, fin, token)
-        with _conectar() as cliente:
-            if config.SMTP_USER:
-                cliente.login(config.SMTP_USER, config.SMTP_PASSWORD)
-            cliente.send_message(mensaje)
-    except Exception:
-        logger.exception("Fallo el envío del email de confirmación")
-
-
-def _armar_mensaje_sumate(nombre: str, email: str) -> EmailMessage:
-    destino = config.SMTP_FROM or "anzorenam133@gmail.com"
-    remitente = formataddr((config.SMTP_FROM_NAME, config.SMTP_FROM))
-
-    mensaje = EmailMessage()
-    mensaje["Subject"] = f"Nuevo interés en sumarse al equipo: {nombre}"
-    mensaje["From"] = remitente
-    mensaje["To"] = destino
-    mensaje["Reply-To"] = formataddr((nombre, email))
-
+def enviar_email_sumate(nombre: str, email: str) -> None:
+    """Notifica al equipo cuando alguien quiere sumarse."""
+    destino = config.EMAIL_TO_TEAM
     texto = (
         f"Alguien quiere sumarse al equipo binfinito.\n\n"
         f"Nombre: {nombre}\n"
@@ -103,26 +78,11 @@ def _armar_mensaje_sumate(nombre: str, email: str) -> EmailMessage:
         "</body></html>"
     )
 
-    mensaje.set_content(texto)
-    mensaje.add_alternative(html, subtype="html")
-    return mensaje
-
-
-def enviar_email_sumate(nombre: str, email: str) -> None:
-    """Notifica al equipo cuando alguien quiere sumarse (best-effort)."""
-    if not config.SMTP_ENABLED:
-        logger.info(
-            "SMTP_ENABLED=false: se omite el email de sumate (%s <%s>)",
-            nombre,
-            email,
-        )
-        return
-
-    try:
-        mensaje = _armar_mensaje_sumate(nombre, email)
-        with _conectar() as cliente:
-            if config.SMTP_USER:
-                cliente.login(config.SMTP_USER, config.SMTP_PASSWORD)
-            cliente.send_message(mensaje)
-    except Exception:
-        logger.exception("Fallo el envío del email de sumate")
+    _enviar({
+        "from": config.EMAIL_FROM,
+        "to": [destino],
+        "reply_to": email,
+        "subject": f"Nuevo interés en sumarse al equipo: {nombre}",
+        "text": texto,
+        "html": html,
+    })

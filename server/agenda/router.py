@@ -5,7 +5,7 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException
 from sqlmodel import Session, select
 
 from ..database import SessionFactory
-from ..email import enviar_email_confirmacion
+from ..mail import enviar_email_confirmacion
 from ..security import crear_token_turno
 from .models import (
     AccesoEquipo,

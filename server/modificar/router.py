@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr
 from sqlmodel import Session
 
 from ..database import SessionFactory
-from ..email import enviar_email_modificacion
+from ..mail import enviar_email_modificacion
 from .models import SolicitudModificacion
 
 router = APIRouter()

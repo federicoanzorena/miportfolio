@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr
 from sqlmodel import Session
 
 from ..database import SessionFactory
-from ..email import enviar_email_sumate
+from ..mail import enviar_email_sumate
 from .models import SolicitudSumate
 
 router = APIRouter()

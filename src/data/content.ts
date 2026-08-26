@@ -218,6 +218,33 @@ interface Content {
     successDescription: string;
     submitAnother: string;
   };
+  modificar: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    nombreLabel: string;
+    nombrePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    urlLabel: string;
+    urlPlaceholder: string;
+    queCambiarLabel: string;
+    queCambiarPlaceholder: string;
+    prioridadesLabel: string;
+    prioridades: string[];
+    presupuestoLabel: string;
+    presupuesto: string[];
+    plazosLabel: string;
+    plazos: string[];
+    detallesLabel: string;
+    detallesPlaceholder: string;
+    invalidForm: string;
+    error: string;
+    submit: string;
+    successTitle: string;
+    successDescription: string;
+    submitAnother: string;
+  };
   common: { backHome: string; skipLink: string };
 }
 
@@ -859,6 +886,55 @@ export const content: Content = {
     successDescription:
       "Guardamos tus datos. Te vamos a contactar cuando tengamos un lugar disponible.",
     submitAnother: "Registrar otro perfil",
+  },
+  modificar: {
+    eyebrow: "Modificar tu sitio",
+    title: "Contanos sobre tu proyecto",
+    description:
+      "Completá esta entrevista y te proponemos un camino claro para modernizar tu sitio sin perder lo que ya funciona.",
+    nombreLabel: "Tu nombre",
+    nombrePlaceholder: "Cómo te llamás",
+    emailLabel: "Tu email",
+    emailPlaceholder: "tucorreo@ejemplo.com",
+    urlLabel: "URL de tu sitio actual",
+    urlPlaceholder: "https://tusitio.com",
+    queCambiarLabel: "¿Qué querés cambiar de tu sitio?",
+    queCambiarPlaceholder:
+      "Contanos qué no te gusta, qué sentís que falta o qué experiencia querés lograr...",
+    prioridadesLabel: "¿Qué es lo más importante para vos?",
+    prioridades: [
+      "Diseño visual",
+      "Experiencia de usuario",
+      "Rendimiento y velocidad",
+      "SEO y visibilidad",
+      "Contenido y estructura",
+      "Funcionalidades nuevas",
+    ],
+    presupuestoLabel: "Presupuesto aproximado",
+    presupuesto: [
+      "Menos de USD 500",
+      "USD 500 – 2.000",
+      "USD 2.000 – 5.000",
+      "Más de USD 5.000",
+      "A definir",
+    ],
+    plazosLabel: "¿Cuándo necesitás tenerlo listo?",
+    plazos: [
+      "Urgente (menos de 1 mes)",
+      "1 – 2 meses",
+      "3 – 6 meses",
+      "Sin prisa",
+    ],
+    detallesLabel: "Detalles técnicos adicionales (opcional)",
+    detallesPlaceholder:
+      "¿Usás algún CMS, hosting específico, o tenés restricciones técnicas?",
+    invalidForm: "Completá tu nombre, email y URL del sitio.",
+    error: "No pudimos procesar tu solicitud. Intentalo de nuevo.",
+    submit: "Enviar solicitud",
+    successTitle: "¡Solicitud enviada!",
+    successDescription:
+      "Recibimos tus datos. Te vamos a contactar para proponerte un plan concreto.",
+    submitAnother: "Enviar otra solicitud",
   },
   common: {
     backHome: "Volver al inicio",

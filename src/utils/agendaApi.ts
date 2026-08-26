@@ -59,3 +59,20 @@ export function registrarInteres(datos: {
     body: JSON.stringify(datos),
   });
 }
+
+export function registrarModificacion(datos: {
+  nombre: string;
+  email: string;
+  url_sitio: string;
+  que_cambiar: string;
+  prioridades: string;
+  presupuesto: string;
+  plazos: string;
+  detalles_tecnicos: string;
+}): Promise<{ ok: boolean; mensaje: string }> {
+  return peticion("/api/modificar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(datos),
+  });
+}

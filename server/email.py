@@ -86,3 +86,54 @@ def enviar_email_sumate(nombre: str, email: str) -> None:
         "text": texto,
         "html": html,
     })
+
+
+def enviar_email_modificacion(
+    nombre: str,
+    email: str,
+    url_sitio: str,
+    que_cambiar: str,
+    prioridades: str,
+    presupuesto: str,
+    plazos: str,
+    detalles_tecnicos: str,
+) -> None:
+    """Notifica al equipo cuando alguien solicita modificar su sitio."""
+    destino = config.EMAIL_TO_TEAM
+    texto = (
+        f"Nueva solicitud de modificación de sitio.\n\n"
+        f"Nombre: {nombre}\n"
+        f"Email: {email}\n"
+        f"URL del sitio: {url_sitio}\n"
+        f"Qué quiere cambiar: {que_cambiar}\n"
+        f"Prioridades: {prioridades}\n"
+        f"Presupuesto: {presupuesto}\n"
+        f"Plazos: {plazos}\n"
+        f"Detalles técnicos: {detalles_tecnicos or 'No especificados'}\n"
+        f"Fecha: {datetime.now().astimezone().strftime('%d/%m/%Y %H:%M')}\n"
+    )
+    html = (
+        "<html><body style='font-family:sans-serif;color:#18181b'>"
+        "<h2>Nueva solicitud de modificación de sitio</h2>"
+        "<dl>"
+        f"<dt><b>Nombre</b></dt><dd>{nombre}</dd>"
+        f"<dt><b>Email</b></dt><dd><a href='mailto:{email}'>{email}</a></dd>"
+        f"<dt><b>URL del sitio</b></dt><dd><a href='{url_sitio}' target='_blank'>{url_sitio}</a></dd>"
+        f"<dt><b>Qué quiere cambiar</b></dt><dd>{que_cambiar}</dd>"
+        f"<dt><b>Prioridades</b></dt><dd>{prioridades}</dd>"
+        f"<dt><b>Presupuesto</b></dt><dd>{presupuesto}</dd>"
+        f"<dt><b>Plazos</b></dt><dd>{plazos}</dd>"
+        f"<dt><b>Detalles técnicos</b></dt><dd>{detalles_tecnicos or 'No especificados'}</dd>"
+        f"<dt><b>Fecha</b></dt><dd>{datetime.now().astimezone().strftime('%d/%m/%Y %H:%M')}</dd>"
+        "</dl>"
+        "</body></html>"
+    )
+
+    _enviar({
+        "from": config.EMAIL_FROM,
+        "to": [destino],
+        "reply_to": email,
+        "subject": f"Nueva solicitud de modificación: {url_sitio}",
+        "text": texto,
+        "html": html,
+    })

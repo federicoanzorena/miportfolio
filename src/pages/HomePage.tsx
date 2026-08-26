@@ -14,7 +14,7 @@ export function HomePage() {
       <ProcessPreview />
       <DeliverablesPreview />
       <TeamSection />
-      <CtaSection cta={content.home.cta} />
+      <CtaSection cta={content.home.cta} primaryTo="/modificar" />
     </>
   );
 }

@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /panel
 
 # Bots de IA y rastreo automático (contenido protegido)
 User-agent: GPTBot

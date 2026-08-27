@@ -7,3 +7,9 @@
   for = "/"
   [headers.values]
     Link = "<https://binfinito-backend.onrender.com/.well-known/api-catalog>; rel=\"api-catalog\", <https://binfinito-backend.onrender.com/docs>; rel=\"service-doc\""
+
+# No indexar el panel administrativo
+[[headers]]
+  for = "/panel*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

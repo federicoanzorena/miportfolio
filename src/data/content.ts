@@ -245,6 +245,25 @@ interface Content {
     successDescription: string;
     submitAnother: string;
   };
+  panel: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    claveLabel: string;
+    clavePlaceholder: string;
+    login: string;
+    loginError: string;
+    disabledError: string;
+    logout: string;
+    tabSumate: string;
+    tabModificar: string;
+    emptySumate: string;
+    emptyModificar: string;
+    loading: string;
+    error: string;
+    retry: string;
+    backHome: string;
+  };
   common: { backHome: string; skipLink: string };
 }
 
@@ -935,6 +954,25 @@ export const content: Content = {
     successDescription:
       "Recibimos tus datos. Te vamos a contactar para proponerte un plan concreto.",
     submitAnother: "Enviar otra solicitud",
+  },
+  panel: {
+    eyebrow: "Panel",
+    title: "Panel administrativo",
+    description: "Acceso restringido. Ingresá la clave para ver las solicitudes.",
+    claveLabel: "Clave de acceso",
+    clavePlaceholder: "Ingresá la clave",
+    login: "Ingresar",
+    loginError: "Clave incorrecta.",
+    disabledError: "El panel no está disponible.",
+    logout: "Cerrar sesión",
+    tabSumate: "Sumate",
+    tabModificar: "Modificar web",
+    emptySumate: "Aún no hay solicitudes de sumate.",
+    emptyModificar: "Aún no hay solicitudes de modificación.",
+    loading: "Cargando solicitudes…",
+    error: "No pudimos cargar las solicitudes.",
+    retry: "Reintentar",
+    backHome: "Volver al inicio",
   },
   common: {
     backHome: "Volver al inicio",

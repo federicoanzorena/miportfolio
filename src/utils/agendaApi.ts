@@ -4,6 +4,7 @@ import type {
   Turno,
   TurnoConfirmado,
 } from "../types/agenda";
+import type { SolicitudModificar, SolicitudSumate } from "../types/panel";
 import { apiUrl } from "./backendBase";
 
 async function peticion<T>(ruta: string, init?: RequestInit): Promise<T> {
@@ -74,5 +75,35 @@ export function registrarModificacion(datos: {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(datos),
+  });
+}
+
+export function loginPanel(clave: string): Promise<{ ok: boolean }> {
+  return peticion("/api/panel/login", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ clave }),
+  });
+}
+
+export function panelEstado(): Promise<{ autenticado: boolean }> {
+  return peticion("/api/panel/estado", { credentials: "include" });
+}
+
+export function logoutPanel(): Promise<{ ok: boolean }> {
+  return peticion("/api/panel/logout", {
+    method: "POST",
+    credentials: "include",
+  });
+}
+
+export function listarSumate(): Promise<SolicitudSumate[]> {
+  return peticion("/api/panel/solicitudes-sumate", { credentials: "include" });
+}
+
+export function listarModificar(): Promise<SolicitudModificar[]> {
+  return peticion("/api/panel/solicitudes-modificar", {
+    credentials: "include",
   });
 }

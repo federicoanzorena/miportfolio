@@ -47,6 +47,9 @@ const SumatePage = lazy(() =>
 const ModificarPage = lazy(() =>
   import("./pages/ModificarPage").then((m) => ({ default: m.ModificarPage })),
 );
+const PanelPage = lazy(() =>
+  import("./pages/PanelPage").then((m) => ({ default: m.PanelPage })),
+);
 const NotFoundPage = lazy(() =>
   import("./pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })),
 );
@@ -64,6 +67,7 @@ const router = createBrowserRouter([
       { path: "/participar", element: <ParticipatePage /> },
       { path: "/sumate", element: <SumatePage /> },
       { path: "/modificar", element: <ModificarPage /> },
+      { path: "/panel", element: <PanelPage /> },
       { path: "/contacto", element: <ContactPage /> },
       { path: "/sobre-mi", element: <Navigate to="/nosotros" replace /> },
       { path: "*", element: <NotFoundPage /> },

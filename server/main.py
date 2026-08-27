@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from .agenda.router import router as agenda_router
 from .chat.router import router as chat_router, supervisor_loop
@@ -43,3 +44,36 @@ app.include_router(agenda_router, prefix="/api")
 app.include_router(sumate_router, prefix="/api")
 app.include_router(modificar_router, prefix="/api")
 app.include_router(chat_router)
+
+
+@app.get("/healthz")
+def healthz() -> dict:
+    return {"status": "ok"}
+
+
+def api_origin() -> str:
+    return os.getenv("API_PUBLIC_URL", "https://binfinito-backend.onrender.com")
+
+
+@app.get("/.well-known/api-catalog", response_class=JSONResponse)
+def api_catalog() -> JSONResponse:
+    origen = api_origin().rstrip("/")
+    return JSONResponse(
+        status_code=200,
+        content={
+            "linkset": [
+                {
+                    "anchor": f"{origen}/",
+                    "service-desc": [
+                        {
+                            "href": f"{origen}/openapi.json",
+                            "type": "application/vnd.oai.openapi+json",
+                        }
+                    ],
+                    "service-doc": [{"href": f"{origen}/docs"}],
+                    "status": [{"href": f"{origen}/healthz"}],
+                }
+            ]
+        },
+        media_type="application/linkset+json",
+    )

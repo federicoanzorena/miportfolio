@@ -12,7 +12,7 @@ interface CtaSectionProps {
 
 export function CtaSection({
   cta,
-  primaryTo = "/contacto",
+  primaryTo = "/modificar",
   secondaryTo = "/metodologia",
 }: CtaSectionProps) {
   return (

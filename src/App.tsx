@@ -38,9 +38,6 @@ const ParticipatePage = lazy(() =>
     default: m.ParticipatePage,
   })),
 );
-const ContactPage = lazy(() =>
-  import("./pages/ContactPage").then((m) => ({ default: m.ContactPage })),
-);
 const SumatePage = lazy(() =>
   import("./pages/SumatePage").then((m) => ({ default: m.SumatePage })),
 );
@@ -68,7 +65,6 @@ const router = createBrowserRouter([
       { path: "/sumate", element: <SumatePage /> },
       { path: "/modificar", element: <ModificarPage /> },
       { path: "/panel", element: <PanelPage /> },
-      { path: "/contacto", element: <ContactPage /> },
       { path: "/sobre-mi", element: <Navigate to="/nosotros" replace /> },
       { path: "*", element: <NotFoundPage /> },
     ],

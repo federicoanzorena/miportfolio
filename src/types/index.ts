@@ -8,8 +8,7 @@ export type RoutePath =
   | "/tecnologias"
   | "/nosotros"
   | "/participar"
-  | "/sumate"
-  | "/contacto";
+  | "/sumate";
 
 export interface NavItem {
   to: RoutePath;
@@ -69,13 +68,6 @@ export interface Technology {
   role: string;
   reason: string;
   icon: LucideIcon;
-}
-
-export interface ContactChannel {
-  label: string;
-  value: string;
-  icon: LucideIcon;
-  href: string;
 }
 
 export interface FooterLink {

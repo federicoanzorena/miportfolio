@@ -41,7 +41,7 @@ import type {
 } from "../types";
 import type { ChatConnectionState } from "../types/chat";
 
-import photo from "../assets/fotoWeb.jpeg";
+import photo from "../assets/insta2.jpeg";
 
 export interface Highlight {
   title: string;

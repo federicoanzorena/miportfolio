@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { User } from "lucide-react";
 import { content } from "../../data/content";
 
-import photo from "../../assets/fotoWeb.jpeg";
+import photo from "../../assets/insta2.jpeg";
 
 type PortraitFrameProps = {
   showPill?: boolean;
@@ -21,7 +21,7 @@ export function PortraitFrame({
     <div className={`relative mx-auto w-full max-w-sm ${className}`}>
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-10 [background-image:radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:18px_18px] [mask-image:radial-gradient(60%_60%_at_50%_45%,black,transparent)]"
+        className="pointer-events-none absolute -inset-10 bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] bg-size-[18px_18px] mask-[radial-gradient(60%_60%_at_50%_45%,black,transparent)]"
       />
 
       <div
@@ -31,11 +31,11 @@ export function PortraitFrame({
 
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-3 translate-x-4 translate-y-4 rounded-[2rem] bg-gradient-to-br from-accent-500/30 via-accent-700/20 to-transparent blur-md"
+        className="pointer-events-none absolute inset-3 translate-x-4 translate-y-4 rounded-4xl bg-linear-to-br from-accent-500/30 via-accent-700/20 to-transparent blur-md"
       />
 
       <div className="group relative">
-        <div className="rounded-[2rem] bg-gradient-to-br from-accent-500/70 via-accent-700/30 to-transparent p-px shadow-2xl shadow-accent-950/40">
+        <div className="rounded-4xl bg-linear-to-br from-accent-500/70 via-accent-700/30 to-transparent p-px shadow-2xl shadow-accent-950/40">
           <div className="relative overflow-hidden rounded-[calc(2rem-1px)]">
             <img
               src={photo}
@@ -43,11 +43,11 @@ export function PortraitFrame({
               width={768}
               height={960}
               loading="lazy"
-              className="aspect-[4/5] w-full object-cover object-[center_30%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              className="aspect-4/5 w-full object-cover object-[center_30%] transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-white/10 to-transparent"
+              className="pointer-events-none absolute inset-x-0 top-0 h-1/3 bg-linear-to-b from-white/10 to-transparent"
             />
             <div
               aria-hidden

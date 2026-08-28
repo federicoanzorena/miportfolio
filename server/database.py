@@ -18,6 +18,7 @@ SessionFactory = sessionmaker(bind=engine, class_=Session, expire_on_commit=Fals
 def init_db() -> None:
     from .agenda.models import FranjaHoraria, Turno
     from .chat.models import Mensaje
+    from .modificar.models import SolicitudModificacion
     from .sumate.models import SolicitudSumate
 
     SQLModel.metadata.create_all(engine)

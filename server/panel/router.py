@@ -35,7 +35,8 @@ def login(body: LoginBody, response: Response) -> dict:
         "panel_session",
         crear_token_admin(),
         httponly=True,
-        samesite="lax",
+        samesite="none",
+        secure=True,
         max_age=8 * 60 * 60,
     )
     return {"ok": True}
@@ -43,7 +44,7 @@ def login(body: LoginBody, response: Response) -> dict:
 
 @router.post("/panel/logout")
 def logout(response: Response) -> dict:
-    response.delete_cookie("panel_session")
+    response.delete_cookie("panel_session", samesite="none", secure=True)
     return {"ok": True}
 
 

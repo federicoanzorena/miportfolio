@@ -59,7 +59,15 @@ export function Footer() {
           <p className="text-xs text-subtle">
             © {year} {content.brand.name}. {content.footer.legal}
           </p>
-          <p className="text-xs text-subtle">{content.footer.credit}</p>
+          <p className="flex items-center gap-4 text-xs text-subtle">
+            <Link
+              to="/privacidad"
+              className="focus-ring rounded text-subtle transition-colors hover:text-zinc-100"
+            >
+              Privacidad
+            </Link>
+            <span>{content.footer.credit}</span>
+          </p>
         </div>
       </Container>
     </footer>

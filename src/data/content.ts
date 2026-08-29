@@ -200,6 +200,14 @@ interface Content {
     backHome: string;
   };
   common: { backHome: string; skipLink: string };
+  privacy: PrivacyContent;
+}
+
+export interface PrivacyContent {
+  eyebrow: string;
+  title: string;
+  description: string;
+  sections: { title: string; body: string[] }[];
 }
 
 export const content: Content = {
@@ -812,5 +820,46 @@ export const content: Content = {
   common: {
     backHome: "Volver al inicio",
     skipLink: "Saltar al contenido",
+  },
+  privacy: {
+    eyebrow: "Privacidad",
+    title: "Política de Privacidad",
+    description:
+      "Te contamos qué datos recolectamos en binfinito, para qué los usamos y cómo los protegemos, en cumplimiento de la Ley N° 25.326 de Protección de Datos Personales de la República Argentina.",
+    sections: [
+      {
+        title: "Responsable del tratamiento",
+        body: [
+          "Los datos son tratados por Federico Anzorena, CUIL 20-29563304-3, responsable del sitio binfinito.",
+        ],
+      },
+      {
+        title: "Qué datos recolectamos",
+        body: [
+          "A través de los formularios de \"Sumate\" y \"Modificar\" recolectamos tu nombre y tu dirección de correo electrónico, únicamente para poder responder tu solicitud.",
+          "No recolectamos datos sensibles, ni datos de navegación con fines de elaboración de perfiles.",
+        ],
+      },
+      {
+        title: "Finalidad y uso",
+        body: [
+          "La información que nos envías se utiliza exclusivamente para atender tu solicitud y, si corresponde, ponernos en contacto con vos.",
+          "No vendemos, cedemos ni compartimos tus datos personales con terceros.",
+        ],
+      },
+      {
+        title: "Conservación y tratamiento",
+        body: [
+          "Tus datos se almacenan de forma segura y se conservan durante el tiempo necesario para cumplir con la finalidad para la que fueron recabados.",
+        ],
+      },
+      {
+        title: "Tus derechos (ARCO)",
+        body: [
+          "De acuerdo con la Ley N° 25.326, podés ejercer los derechos de acceso, rectificación y supresión de tus datos personales, así como oponerte a su tratamiento, enviándonos un correo.",
+          "Como responsable, podés contactarte por la vía de comunicación indicada en el sitio para ejercer estos derechos.",
+        ],
+      },
+    ],
   },
 };

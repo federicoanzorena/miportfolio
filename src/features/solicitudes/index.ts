@@ -1,0 +1,1 @@
+export { SolicitudesPanel } from "./components/SolicitudesPanel";

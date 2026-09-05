@@ -1,0 +1,1 @@
+export { SumatePage } from "./SumatePage";

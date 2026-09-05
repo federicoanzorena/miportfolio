@@ -1,0 +1,1 @@
+export { ModificarPage } from "./ModificarPage";

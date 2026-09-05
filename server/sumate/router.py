@@ -1,10 +1,7 @@
 from fastapi import APIRouter, BackgroundTasks
 from pydantic import BaseModel, EmailStr
-from sqlmodel import Session
 
-from ..database import SessionFactory
-from ..mail import enviar_email_sumate
-from .models import SolicitudSumate
+from . import service
 
 router = APIRouter()
 
@@ -15,28 +12,19 @@ class SumateCreate(BaseModel):
     website: str = ""
 
 
+MENSAJE_OK = "Registro recibido. Te contactaremos cuando haya un lugar."
+
+
 @router.post("/sumate", status_code=200)
 def registrar_interes(body: SumateCreate, background_tasks: BackgroundTasks) -> dict:
-    # Honeypot: si el campo oculto tiene contenido, es un bot
-    if body.website.strip():
-        return {
-            "ok": True,
-            "mensaje": "Registro recibido. Te contactaremos cuando haya un lugar.",
-        }
+    if service.solicitud_antispam(body.website):
+        return {"ok": True, "mensaje": MENSAJE_OK}
 
-    nombre = body.nombre.strip()
-    email = body.email.strip()
+    solicitud = service.crear_interes(
+        nombre=body.nombre.strip(),
+        email=body.email.strip(),
+    )
 
-    # Guardar en DB antes de enviar email
-    solicitud = SolicitudSumate(nombre=nombre, email=email)
-    with SessionFactory() as session:
-        session.add(solicitud)
-        session.commit()
+    background_tasks.add_task(service.enviar_email, solicitud.nombre, solicitud.email)
 
-    # Notificación por email (best-effort)
-    background_tasks.add_task(enviar_email_sumate, nombre, email)
-
-    return {
-        "ok": True,
-        "mensaje": "Registro recibido. Te contactaremos cuando haya un lugar.",
-    }
+    return {"ok": True, "mensaje": MENSAJE_OK}

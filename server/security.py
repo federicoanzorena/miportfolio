@@ -2,6 +2,7 @@ import os
 from datetime import datetime, timedelta, timezone
 
 import jwt
+from fastapi import Cookie, HTTPException
 
 SECRET_KEY = os.getenv("BINFINITO_SECRET", "dev-secret-change-me")
 ALGORITHM = "HS256"
@@ -35,6 +36,11 @@ def crear_token_admin(expires_delta: timedelta | None = None) -> str:
 def es_token_admin(token: str | None) -> bool:
     datos = verificar_token(token)
     return bool(datos and datos.get("rol") == ROL_ADMIN)
+
+
+def _exigir_admin(panel_session: str | None = Cookie(default=None)) -> None:
+    if not es_token_admin(panel_session):
+        raise HTTPException(status_code=401, detail="No autorizado")
 
 
 def verificar_token(token: str | None) -> dict | None:

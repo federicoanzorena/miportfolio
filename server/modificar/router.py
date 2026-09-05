@@ -1,10 +1,7 @@
 from fastapi import APIRouter, BackgroundTasks
 from pydantic import BaseModel, EmailStr
-from sqlmodel import Session
 
-from ..database import SessionFactory
-from ..mail import enviar_email_modificacion
-from .models import SolicitudModificacion
+from . import service
 
 router = APIRouter()
 
@@ -21,52 +18,37 @@ class ModificacionCreate(BaseModel):
     website: str = ""
 
 
+MENSAJE_OK = "Solicitud recibida. Te contactaremos pronto."
+
+
 @router.post("/modificar", status_code=200)
 def registrar_modificacion(
     body: ModificacionCreate, background_tasks: BackgroundTasks
 ) -> dict:
-    if body.website.strip():
-        return {
-            "ok": True,
-            "mensaje": "Solicitud recibida. Te contactaremos pronto.",
-        }
+    if service.solicitud_antispam(body.website):
+        return {"ok": True, "mensaje": MENSAJE_OK}
 
-    nombre = body.nombre.strip()
-    email = body.email.strip()
-    url_sitio = body.url_sitio.strip()
-    que_cambiar = body.que_cambiar.strip()
-    prioridades = body.prioridades.strip()
-    presupuesto = body.presupuesto.strip()
-    plazos = body.plazos.strip()
-    detalles_tecnicos = body.detalles_tecnicos.strip()
-
-    solicitud = SolicitudModificacion(
-        nombre=nombre,
-        email=email,
-        url_sitio=url_sitio,
-        que_cambiar=que_cambiar,
-        prioridades=prioridades,
-        presupuesto=presupuesto,
-        plazos=plazos,
-        detalles_tecnicos=detalles_tecnicos,
+    solicitud = service.crear_solicitud(
+        nombre=body.nombre.strip(),
+        email=body.email.strip(),
+        url_sitio=body.url_sitio.strip(),
+        que_cambiar=body.que_cambiar.strip(),
+        prioridades=body.prioridades.strip(),
+        presupuesto=body.presupuesto.strip(),
+        plazos=body.plazos.strip(),
+        detalles_tecnicos=body.detalles_tecnicos.strip(),
     )
-    with SessionFactory() as session:
-        session.add(solicitud)
-        session.commit()
 
     background_tasks.add_task(
-        enviar_email_modificacion,
-        nombre,
-        email,
-        url_sitio,
-        que_cambiar,
-        prioridades,
-        presupuesto,
-        plazos,
-        detalles_tecnicos,
+        service.enviar_email,
+        solicitud.nombre,
+        solicitud.email,
+        solicitud.url_sitio,
+        solicitud.que_cambiar,
+        solicitud.prioridades,
+        solicitud.presupuesto,
+        solicitud.plazos,
+        solicitud.detalles_tecnicos,
     )
 
-    return {
-        "ok": True,
-        "mensaje": "Solicitud recibida. Te contactaremos pronto.",
-    }
+    return {"ok": True, "mensaje": MENSAJE_OK}

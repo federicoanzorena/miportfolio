@@ -1,7 +1,9 @@
-fastapi>=0.115
-uvicorn[standard]>=0.30
-sqlmodel>=0.0.22
-PyJWT>=2.8
-psycopg2-binary>=2.9
-email-validator>=2.2
-resend>=2.0
+fastapi==0.141.1
+uvicorn[standard]==0.52.1
+sqlmodel==0.0.39
+sqlalchemy==2.0.51
+pydantic==2.13.4
+PyJWT==2.13.0
+psycopg2-binary==2.9.12
+email-validator==2.3.0
+resend==2.40.2
